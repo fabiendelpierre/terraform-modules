@@ -12,12 +12,6 @@ variable "resource_name" {
   type = string
 }
 
-variable "deactivate" {
-  type        = bool
-  default     = false
-  description = "Set to true to destroy resources that cost money (the NAT gateway and the Elastic IP attached to it)"
-}
-
 variable "tags" {
   type    = map(string)
   default = {}

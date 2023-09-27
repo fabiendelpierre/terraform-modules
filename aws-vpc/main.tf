@@ -111,8 +111,6 @@ resource "aws_subnet" "public3" {
 }
 
 resource "aws_eip" "natgw" {
-  count = (var.deactivate == true ? 0 : 1)
-
   domain = "vpc"
 
   tags = merge(
@@ -124,11 +122,9 @@ resource "aws_eip" "natgw" {
 }
 
 resource "aws_nat_gateway" "main" {
-  count = (var.deactivate == true ? 0 : 1)
-
   depends_on = [aws_internet_gateway.main]
 
-  allocation_id = aws_eip.natgw[0].id
+  allocation_id = aws_eip.natgw.id
   subnet_id     = aws_subnet.public1.id
 
   tags = merge(
@@ -151,8 +147,6 @@ resource "aws_route_table" "public_subnets" {
 }
 
 resource "aws_route" "public_internet" {
-  count = (var.deactivate == true ? 0 : 1)
-
   route_table_id         = aws_route_table.public_subnets.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.main.id
@@ -185,11 +179,9 @@ resource "aws_route_table" "private_subnets" {
 }
 
 resource "aws_route" "private_natgw" {
-  count = (var.deactivate == true ? 0 : 1)
-
   route_table_id         = aws_route_table.private_subnets.id
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id         = aws_nat_gateway.main[0].id
+  nat_gateway_id         = aws_nat_gateway.main.id
 }
 
 resource "aws_route_table_association" "private1" {

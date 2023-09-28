@@ -16,3 +16,13 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "igw" {
+  type    = bool
+  default = true
+}
+
+variable "natgw" {
+  type    = bool
+  default = true
+}

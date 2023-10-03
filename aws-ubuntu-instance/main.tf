@@ -41,6 +41,7 @@ resource "aws_instance" "main" {
   vpc_security_group_ids      = var.security_group_ids
   ebs_optimized               = true
   iam_instance_profile        = aws_iam_instance_profile.main.name
+  user_data_base64            = var.user_data_base64
 
   root_block_device {
     volume_type = "gp3"

@@ -49,3 +49,8 @@ variable "ubuntu_version" {
   type    = string
   default = "22"
 }
+
+variable "user_data_base64" {
+  type    = string
+  default = null
+}

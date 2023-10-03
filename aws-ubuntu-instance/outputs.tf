@@ -2,6 +2,10 @@ output "ami_id" {
   value = data.aws_ami.ubuntu.id
 }
 
+output "id" {
+  value = aws_instance.main.id
+}
+
 output "private_ip" {
   value = aws_instance.main.private_ip
 }

@@ -15,7 +15,7 @@ resource "aws_iam_role" "main" {
     ]
   })
 
-  managed_policy_arns = var.iam_role_policy_arns
+  managed_policy_arns = local.managed_policy_arns
 
   tags = merge(
     {

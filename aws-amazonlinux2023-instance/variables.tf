@@ -19,7 +19,8 @@ variable "instance_type" {
 }
 
 variable "key_pair_name" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "resource_name" {
@@ -45,12 +46,13 @@ variable "tags" {
   default = {}
 }
 
-variable "ubuntu_version" {
-  type    = string
-  default = "22"
-}
-
 variable "user_data_base64" {
   type    = string
   default = null
+}
+
+variable "register_with_session_manager" {
+  type        = bool
+  default     = false
+  description = "Register the instance with AWS Systems Manager Session Manager"
 }

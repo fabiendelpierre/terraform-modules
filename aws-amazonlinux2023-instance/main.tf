@@ -15,14 +15,17 @@ resource "aws_iam_role" "main" {
     ]
   })
 
-  managed_policy_arns = local.managed_policy_arns
-
   tags = merge(
     {
       Name = "${var.resource_name}-role"
     },
     var.tags
   )
+}
+
+resource "aws_iam_role_policy_attachments_exclusive" "main" {
+  role_name   = aws_iam_role.main.name
+  policy_arns = local.managed_policy_arns
 }
 
 resource "aws_iam_instance_profile" "main" {

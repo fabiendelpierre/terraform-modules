@@ -23,9 +23,19 @@ resource "aws_iam_role" "main" {
   )
 }
 
-resource "aws_iam_role_policy_attachments_exclusive" "main" {
-  role_name   = aws_iam_role.main.name
-  policy_arns = local.managed_policy_arns
+resource "aws_iam_role_policy_attachment" "session_manager" {
+  # Only attach the AmazonSSMManagedInstanceCore policy if register_with_session_manager is true
+  count = var.register_with_session_manager ? 1 : 0
+
+  role       = aws_iam_role.main.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+}
+
+resource "aws_iam_role_policy_attachment" "additional_iam_policies" {
+  count = length(var.iam_role_policy_arns) > 0 ? length(var.iam_role_policy_arns) : 0
+
+  role       = aws_iam_role.main.name
+  policy_arn = element(var.iam_role_policy_arns, count.index)
 }
 
 resource "aws_iam_instance_profile" "main" {
